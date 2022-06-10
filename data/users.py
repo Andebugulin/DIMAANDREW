@@ -7,6 +7,7 @@ from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy_utils import PhoneNumberType
 
 
 
@@ -15,7 +16,7 @@ class User(SqlAlchemyBase, UserMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
-    phone = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    phone = sqlalchemy.Column(PhoneNumberType(), nullable=False)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
