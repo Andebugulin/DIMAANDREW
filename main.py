@@ -1,9 +1,13 @@
 # IT S AN IMPORTANT FILE
 # I GOT PRACTISE HERE
 # YOU R WELCOME
+from pathlib import Path
+
 
 from flask import Flask, render_template, redirect, request, make_response, session
 from werkzeug.exceptions import abort
+import request
+
 
 from data import db_session
 from data.news import News
@@ -12,6 +16,7 @@ from forms.user import RegisterForm
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms.loginform1 import LoginForm
 from forms.news import NewsForm
+import os
 
 
 app = Flask(__name__)
@@ -19,7 +24,16 @@ app.config['SECRET_KEY'] = 'meawmurkissshshshsh'
 
 
 
+
+
 def main():
+    def passage(file_name, folder):
+        for element in os.scandir(folder):
+            if element.is_file():
+                if element.name == file_name:
+                    yield folder
+            else:
+                yield from passage(file_name, element.path)
 
     db_session.global_init("db/blogs.db")
     login_manager = LoginManager()
@@ -119,6 +133,10 @@ def main():
             news = News()
             news.title = form.title.data
             news.content = form.content.data
+            news.photo = str(os.path.abspath(form.photo.data))
+
+
+
             news.is_private = form.is_private.data
             current_user.news.append(news)
             db_sess.merge(current_user)

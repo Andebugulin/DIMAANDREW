@@ -11,8 +11,16 @@
     <div>
         {{item.content}}
     </div>
+
     <div>
-        Автор - {{item.user.name}}, Дата написания - {{item.created_date}} ТЕЛЕФОН - {{item.user.phone}}
+        {{item.photo}}
+        <img src="{{item.photo}}"
+           alt="здесь должна была быть картинка, но не нашлась">
+    </div>
+    <div>
+        Автор: {{item.user.name}};
+        Дата написания: {{item.created_date}};
+        Телефон: {{item.user.phone}}
     </div>
     {% if current_user.is_authenticated and current_user == item.user %}
     <div>
