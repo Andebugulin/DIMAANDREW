@@ -13,14 +13,14 @@
     </div>
 
     <div>
-        {{item.photo}}
-        <img src="{{item.photo}}"
-           alt="здесь должна была быть картинка, но не нашлась">
+        <img src="{{url_for('static', filename=item.photo)}}"
+           alt="здесь должна была быть картинка, но не нашлась" width="350" height="250">
     </div>
     <div>
-        Автор: {{item.user.name}};
-        Дата написания: {{item.created_date}};
-        Телефон: {{item.user.phone}}
+
+        Автор: {{item.user.name}};<br>
+        Дата написания: {{item.created_date}};<br>
+        Телефон: {{item.user.phone}}<br>
     </div>
     {% if current_user.is_authenticated and current_user == item.user %}
     <div>

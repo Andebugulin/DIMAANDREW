@@ -4,10 +4,9 @@
 from pathlib import Path
 
 
-from flask import Flask, render_template, redirect, request, make_response, session
+from flask import Flask, render_template, redirect, make_response, session, request
 from werkzeug.exceptions import abort
-import request
-
+from werkzeug.utils import secure_filename
 
 from data import db_session
 from data.news import News
@@ -22,18 +21,11 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'meawmurkissshshshsh'
 
-
-
+UPLOAD_FOLDER = r'C:\Users\gulin\PycharmProjects\HTTP_SKATE\static\img'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 def main():
-    def passage(file_name, folder):
-        for element in os.scandir(folder):
-            if element.is_file():
-                if element.name == file_name:
-                    yield folder
-            else:
-                yield from passage(file_name, element.path)
 
     db_session.global_init("db/blogs.db")
     login_manager = LoginManager()
@@ -132,9 +124,12 @@ def main():
             db_sess = db_session.create_session()
             news = News()
             news.title = form.title.data
+            file = request.files['photo']
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             news.content = form.content.data
-            news.photo = str(os.path.abspath(form.photo.data))
-
+            news.photo = 'img/' + filename
+            print(news.photo)
 
 
             news.is_private = form.is_private.data
@@ -157,6 +152,7 @@ def main():
             if news:
                 form.title.data = news.title
                 form.content.data = news.content
+                form.photo.data = news.photo
                 form.is_private.data = news.is_private
             else:
                 abort(404)
@@ -169,6 +165,10 @@ def main():
                 news.title = form.title.data
                 news.content = form.content.data
                 news.is_private = form.is_private.data
+                file = request.files['photo']
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                news.photo = 'img/' + filename
                 db_sess.commit()
                 return redirect('/')
             else:
