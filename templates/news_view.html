@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="col-md6 border rounded">
+    <h2> {{news.title}}</h2>
+    <div>
+        {{news.content}}
+    </div>
+    <div>
+        <img src="{{url_for('static', filename=news.photo)}}"
+           alt="здесь должна была быть картинка, но не нашлась" width="350" height="250">
+    </div>
+
+    <div>
+        Автор: {{news.user.name}};<br>
+        Дата написания: {{news.created_date}};<br>
+        Телефон: {{news.user.phone}}<br>
+    </div>
+</div>
+
+{% endblock %}

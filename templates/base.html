@@ -9,25 +9,29 @@
           crossorigin="anonymous">
     <title>{{title}}</title>
 </head>
-<body>
+<body onscroll="True">
 <header>
     <nav class="navbar navbar-light bg-light">
-
-        <a class="navbar-brand" href="#">Наш скейтбординг</a>
-
+        <a class="navbar-brand" href="#">Наш Сайтбординг</a>
         {% if current_user.is_authenticated %}
-    <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
-{% else %}
-    <p>
-        <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
-        <a class="btn btn-success" href="/login">Войти</a>
-    </p>
-{% endif %}
+        <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+        {% else %}
+        <p>
+            <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+            <a class="btn btn-success" href="/login">Войти</a>
+        </p>
+        {% endif %}
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
     </nav>
 </header>
 <!-- Begin page content -->
 <main role="main" class="container">
     {% block content %}{% endblock %}
 </main>
+<a href="#top" class="btn btn-block btn-outline-primary">Наверх</a>
 </body>
 </html>

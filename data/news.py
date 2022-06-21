@@ -28,3 +28,4 @@ class News(SqlAlchemyBase):
                               secondary="association",
                               backref="news")
 
+
