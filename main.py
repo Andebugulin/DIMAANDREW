@@ -20,7 +20,6 @@ import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'meawmurkissshshshsh'
-
 UPLOAD_FOLDER = r'C:\Users\gulin\PycharmProjects\LEARNING\HTTP_SKATE\static\img'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
